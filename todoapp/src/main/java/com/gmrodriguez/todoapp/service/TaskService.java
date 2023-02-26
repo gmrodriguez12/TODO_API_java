@@ -44,4 +44,15 @@ public class TaskService {
 
         taskRepository.markTaskAsFinished(id);
     }
+
+    @Transactional
+    public void deleteTask(Long id) {
+        Optional<Task> optionalTaks = taskRepository.findById(id);
+
+        if(optionalTaks.isEmpty()) {
+            throw new ToDoExceptions("Task not found", HttpStatus.NOT_FOUND);
+        }
+
+        taskRepository.deleteById(id);
+    }
 }
